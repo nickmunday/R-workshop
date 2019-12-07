@@ -75,10 +75,10 @@ kelp_golb <- read_excel(here("r-workshop-data","kelp_counts_curated.xlsx"),
 #create path to data
 kelp_path <- here("r-workshop-data","kelp_counts_curated.xlsx")
 
-# kelp_all_sites <- kelp_path %>%
-#  excel_sheets() %>%
-#  set_names() %>%
-#  map_df(read_excel, kelp_path)
+kelp_all_sites <- kelp_path %>%
+ excel_sheets() %>%
+ set_names() %>%
+ purrr::map_df(read_excel, path=kelp_path)
 ```
 
 ### write back to excel
