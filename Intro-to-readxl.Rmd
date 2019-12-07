@@ -15,7 +15,8 @@ We're going to use packages:
 - writexl
 - here
 
-```{r packages}
+```{r packages, message=FALSE}
+###message hides reponses and error message, 
 library (tidyverse)
 library (readxl)
 library (writexl)
@@ -74,9 +75,9 @@ kelp_golb <- read_excel(here("r-workshop-data","kelp_counts_curated.xlsx"),
 #create path to data
 kelp_path <- here("r-workshop-data","kelp_counts_curated.xlsx")
 
-#kelp_all_sites <- kelp_path %>%
-#  excel_sheets() %>% 
-#  set_names() %>% 
+# kelp_all_sites <- kelp_path %>%
+#  excel_sheets() %>%
+#  set_names() %>%
 #  map_df(read_excel, kelp_path)
 ```
 
