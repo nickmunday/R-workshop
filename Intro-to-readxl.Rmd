@@ -28,7 +28,7 @@ all html tags recognized -->
 
 ### Read in fish counts
 
-```{r}
+```{r read-in-csv}
 ###Read in the fish_counts_curated.csv file
 fish_counts <- read_csv(here("r-workshop-data","fish_counts_curated.csv"))
 ```
@@ -36,7 +36,7 @@ fish_counts <- read_csv(here("r-workshop-data","fish_counts_curated.csv"))
 ### Read in data from a single excel worksheet
 
 Now, to read in an excel spreadsheet, we'll use the function `read_excel()`
-``` {r}
+``` {r read-in-excel}
 ### skip first 4 rows, replace -9999 with na
 substrate_cover <- read_excel(here("r-workshop-data","substrate_cover_curated.xlsx"), 
                               skip = 4, 
@@ -46,7 +46,7 @@ substrate_cover <- read_excel(here("r-workshop-data","substrate_cover_curated.xl
 
 ### Use read_excel() to read in a range of values
 
-``` {r}
+``` {r read-in-range}
 carp_cover_2000 <- read_excel(here("r-workshop-data","substrate_cover_curated.xlsx"),
                               range = "D12:I15",
                               col_names = c("site",
@@ -55,14 +55,44 @@ carp_cover_2000 <- read_excel(here("r-workshop-data","substrate_cover_curated.xl
                                             "side",
                                             "type",
                                             "coverage"))
+### c( ) is to combine arguments
 ```
 
 ### read in data from different tabs
 
-``` {r}
-kelp_counts <- read_excel(here("r-workshop-data","kelp_counts_curated.xlsx"),
-                  )
+read in from sheet named golb
+
+``` {r read-in-sheets}
+kelp_golb <- read_excel(here("r-workshop-data","kelp_counts_curated.xlsx"),
+                          sheet = "golb")
 ```
+
+### read in and combine sheet using purrr::map_df()
+
+
+``` {r combine-sheets}
+#create path to data
+kelp_path <- here("r-workshop-data","kelp_counts_curated.xlsx")
+
+#kelp_all_sites <- kelp_path %>%
+#  excel_sheets() %>% 
+#  set_names() %>% 
+#  map_df(read_excel, kelp_path)
+```
+
+### write back to excel
+
+Write "kelp_golb" object to csv
+
+``` {r write-to-excel}
+write_csv (kelp_golb, "kelp_golb_july.csv")
+
+write_xlsx (kelp_golb, here("r-workshop-data","july.xlsx"))
+
+```
+
+
+
 
 
 
