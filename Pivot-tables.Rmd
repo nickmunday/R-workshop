@@ -1,0 +1,44 @@
+---
+title: "Pivot-Tables"
+output: html_document
+---
+
+### attach libraries
+
+```{r}
+library (tidyverse)
+library(here)
+library (readxl)
+library (skimr) # install.packages("skimar")
+```
+
+### read in data
+
+```{r}
+lobsters <- read_xlsx(here("r-workshop-data/lobsters.xlsx"))
+```
+
+### explore data to see structure
+`head` provides first 6 lines of data source
+
+```{r}
+head(lobsters)
+summary (lobsters)
+```
+### skimr::skim() gives additional summary stats and is pipable (%>%)
+
+```{r}
+skim(lobsters)
+```
+```{r}
+ggplot (data=lobsters, aes(x=year)) +
+  geom_bar() +
+  facet_wrap(~site)
+```
+
+### task
+
+how has the average size of lobsters changed over time across sites?
+
+
+
