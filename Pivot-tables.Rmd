@@ -40,5 +40,63 @@ ggplot (data=lobsters, aes(x=year)) +
 
 how has the average size of lobsters changed over time across sites?
 
+Pivot tables in R are `group_by` %>% `summarize`
+
+```{r}
+lobsters %>% #pipe %>% is like "and then..." eg take lobsters data, and then group by year, and then summarize
+  group_by(year)%>%
+  summarize(count_by_something = n())
+```
+
+### group by multiple variables
+and summarize by multiple variables
+
+We used mean() to calculate the mean size of lobsters by each site and year and used na.rm = TRUE to calculate mean despite having missing values in our raw data
+
+```{r}
+lobsters %>%
+  group_by (site, 
+            year) %>%
+  summarize (count_by_siteyear = n(),
+             mean_size_mm = mean(size_mm, na.rm=TRUE))
+```
+
+```{r}
+lobstersgraph <- lobsters %>%
+  group_by (site, 
+            year) %>%
+  summarize (count_by_siteyear = n(),
+             stanard_deviation = sd(size_mm, na.rm = TRUE),
+             mean_size_mm = mean(size_mm, na.rm=TRUE),
+             median_size_mm = median(size_mm, na.rm=TRUE))
+
+ggplot (data=lobstersgraph, aes(x=site, y=median_size_mm, color = site)) +
+  geom_line () +
+  theme_light ()
+
+ggsave ("lobsters_graph.png", dpi = 180, width = 8, height = 7)
+```
+
+
+### mutate () adds a column
+it will make a new variable
+
+add column which is size in meters
+
+```{r}
+head(lobsters)
+
+lobsters %>%
+  mutate (size_m = size_mm / 1000, 
+          observer = "Nick Munday")
+```
+
+### select () function to subset variables by column
+select date, site, size_m
+
+```{r}
+lobsters_subset <- lobsters %>%
+  select(date, site, size_m)
+```
 
 
