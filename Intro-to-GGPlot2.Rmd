@@ -29,7 +29,7 @@ ci_np <- read_excel(here("r-workshop-data","ci_np.xlsx"))
 3. what type of graph we are creating (geom)
 
 ```{r make-graph, eval = FALSE}
-ggplot (data = THS, aes (x= THIS, y=THIS)) + 
+ggplot (data = THIS, aes (x= THIS, y=THIS)) + 
   geom_this()
 # EVAL=FALSE DOES NOT TRY TO RUN CODE
 ```

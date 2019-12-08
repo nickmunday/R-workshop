@@ -62,7 +62,7 @@ lobsters %>%
 ```
 
 ```{r}
-lobstersgraph <- lobsters %>%
+siteyear_summary <- lobsters %>%
   group_by (site, 
             year) %>%
   summarize (count_by_siteyear = n(),
@@ -70,10 +70,16 @@ lobstersgraph <- lobsters %>%
              mean_size_mm = mean(size_mm, na.rm=TRUE),
              median_size_mm = median(size_mm, na.rm=TRUE))
 
-ggplot (data=lobstersgraph, aes(x=site, y=median_size_mm, color = site)) +
-  geom_line () +
-  theme_light ()
+siteyear_summary
+```
 
+``` {r}
+ggplot (data=siteyear_summary, aes(x=year, y=median_size_mm, color = site)) +
+  geom_line () 
+```
+
+
+``` {r}
 ggsave ("lobsters_graph.png", dpi = 180, width = 8, height = 7)
 ```
 
@@ -96,6 +102,7 @@ select date, site, size_m
 
 ```{r}
 lobsters_subset <- lobsters %>%
+  mutate (size_m = size_mm / 1000) %>%
   select(date, site, size_m)
 ```
 
