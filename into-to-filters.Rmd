@@ -1,0 +1,78 @@
+---
+title: "Filter/Joins"
+output: html_document
+---
+
+
+```{r, include=FALSE}
+library (tidyverse)
+library (readxl)
+library (here)
+```
+
+```{r, message=FALSE}
+invert_counts <- read_excel(here("r-workshop-data/invert_counts_curated.xlsx"))
+fish_counts <- read_csv(here("r-workshop-data/fish_counts_curated.csv"))
+kelp_counts <- read_excel(here("r-workshop-data/kelp_counts_curated.xlsx"))
+```
+
+include=FALSE does not display process or responses, message=FALSE includes process but no message, 
+
+- select () function: keep, exclude, or rearrange columns
+- filter () function: keep or exclude ROWS (observations) based on whether or not they match variable conditions
+
+### filter to match rows based on a character string
+
+Only keep observations from fish_counts where the common name variable matches "garibaldi"
+
+```{r}
+fish_garibaldi <- fish_counts %>%
+  filter(common_name=="garibaldi")
+```
+
+### filter based on numerical observations
+
+```{r}
+fish_over_50 <- fish_counts %>%
+  filter(total_count>=50)
+``` 
+
+### only find mo
+
+```{r}
+mohawk_fish <- fish_counts %>% 
+  filter (site=="mohk")
+```
+
+### filter for this or that
+
+Use %in% operator to look for any matches within a vector
+
+c() is to combine strings
+
+```{r}
+fish_3sp <- fish_counts %>% 
+  filter (common_name %in% c("garibaldi","blacksmith","black surperch"))
+```
+
+### filter to return rows for multiple variables (AND statements)
+
+find site is abur or mohk and species is purple urchin
+
+can seperate AND conditions within a filter line by comma or & or can %>% to an additional filter line
+
+
+```{r}
+urchin_abur_mohk <- invert_counts %>%
+  filter (site %in% c("abur","mohk"), common_name=="purple urchin")
+```
+
+
+
+
+
+
+
+
+
+
