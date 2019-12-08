@@ -1,0 +1,73 @@
+---
+title: "Intro-to-GGPlot2"
+author: "Nick Munday"
+date: "Sunday December 8"
+output: html_document
+---
+
+### attach packages
+
+``` {r attach-packages, message=FALSE}
+
+library(tidyverse)
+library(readxl)
+library(here)
+
+```
+
+### read in data
+
+```{r read-in-excel}
+ca_np <- read_csv(here("r-workshop-data","ca_np.csv"))
+ci_np <- read_excel(here("r-workshop-data","ci_np.xlsx"))
+```
+
+### make a graph
+
+1. tell R we are using `ggplot`
+2. tell R what data we're using, and what variables we want to plat
+3. what type of graph we are creating (geom)
+
+```{r make-graph, eval = FALSE}
+ggplot (data = THS, aes (x= THIS, y=THIS)) + 
+  geom_this()
+# EVAL=FALSE DOES NOT TRY TO RUN CODE
+```
+
+```{r}
+ggplot (data = ci_np, aes (x=year, y=visitors)) + 
+  geom_line()
+```
+
+```{r}
+ggplot (data = ci_np, aes (x=year, y=visitors)) + 
+  geom_area ()
+```
+
+```{r}
+ggplot (data = ci_np, aes (x=year, y=visitors)) + 
+  geom_col ()
+```
+
+### customize `ggplot` graphs
+ - color = (update the point or line color )
+ - fill = (update the fill color)
+ - linetype =
+ - pch = value
+ - size
+ - alpha
+
+```{r}
+ggplot (data = ci_np, aes (x=year, y=visitors)) + 
+  geom_col (color = "red", linetype= "dashed", fill="blue")
+```
+
+I have some awesome text and now a graph below
+
+```{r, echo=FALSE}
+ggplot (data = ci_np, aes (x=year, y=visitors)) + 
+  geom_point (color = "blue", pch = 12, size = 4, alpha=0.5)
+```
+
+
+
