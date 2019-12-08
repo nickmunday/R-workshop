@@ -13,7 +13,7 @@ library (here)
 ```{r, message=FALSE}
 invert_counts <- read_excel(here("r-workshop-data/invert_counts_curated.xlsx"))
 fish_counts <- read_csv(here("r-workshop-data/fish_counts_curated.csv"))
-kelp_counts <- read_excel(here("r-workshop-data/kelp_counts_curated.xlsx"))
+kelp_counts_abur <- read_excel(here("r-workshop-data/kelp_counts_curated.xlsx"))
 ```
 
 include=FALSE does not display process or responses, message=FALSE includes process but no message, 
@@ -57,7 +57,7 @@ fish_3sp <- fish_counts %>%
 
 ### filter to return rows for multiple variables (AND statements)
 
-find site is abur or mohk and species is purple urchin
+find site is abur or mohk and species is purple urchin. == means equal to
 
 can seperate AND conditions within a filter line by comma or & or can %>% to an additional filter line
 
@@ -68,6 +68,62 @@ urchin_abur_mohk <- invert_counts %>%
 ```
 
 
+create subset from fish counts with garibaldi and rock wrasse where count is below 10
+
+```{r}
+low_gb_rw <- fish_counts %>%
+  filter (common_name %in% c("garibaldi","rock wrasse") & total_count < 10)
+  
+```
+
+filter rows that do not match conditions
+use != indicateds does not match
+
+```{r}
+no_mohk <- fish_counts %>% 
+  filter (site != "mohk")
+```
+
+example of filter as part of piped sequence 
+
+all years, all sites, total or just senorita
+
+```{r}
+senoitas <- fish_counts %>%
+  filter (common_name == "senorita") %>%
+  group_by(site)%>%
+  summarise(count_all_years = sum(total_count))
+```
+
+
+
+
+write values in year column as numeric (as opposed to how it was recognized as character)
+```{r}
+kelp_counts_abur <- kelp_counts_abur %>%
+  mutate (year = as.numeric(year))
+```
+
+
+### Joining data frames
+
+- `full_join` : keeps everything (safe join)
+- `left_join` : merging A and B, will only return observations from B that have matches in A
+
+| (above enter) is also OR
+
+```{r}
+fish_2016_2017 <- fish_counts %>%
+  filter (year == 2016 | year == 2017)
+
+```
+
+join with a new frame
+
+```{r}
+abur_kelp_join <- fish_2016_2017 %>%
+  full_join(kelp_counts_abur, by = c("year","site")
+```
 
 
 
